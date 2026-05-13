@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CV - Krisna Adilla Fernanda</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background:#f4f4f4;
+      color:#333;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:40px auto;
+      background:white;
+      border-radius:15px;
+      overflow:hidden;
+      box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .header{
+      background:#111827;
+      color:white;
+      padding:40px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+
+    .profile{
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    .profile img{
+      width:130px;
+      height:130px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid white;
+    }
+
+    .profile-text h1{
+      font-size:42px;
+      margin-bottom:10px;
+    }
+
+    .profile-text p{
+      font-size:18px;
+      color:#d1d5db;
+    }
+
+    .contact{
+      text-align:right;
+      line-height:1.8;
+      font-size:15px;
+    }
+
+    .content{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+      padding:40px;
+    }
+
+    .section{
+      margin-bottom:35px;
+    }
+
+    .section h2{
+      margin-bottom:15px;
+      color:#111827;
+      border-left:5px solid #2563eb;
+      padding-left:10px;
+      font-size:24px;
+    }
+
+    .item{
+      margin-bottom:20px;
+    }
+
+    .item h3{
+      font-size:18px;
+      margin-bottom:5px;
+    }
+
+    .item span{
+      color:#666;
+      font-size:14px;
+    }
+
+    ul{
+      margin-top:10px;
+      padding-left:20px;
+    }
+
+    li{
+      margin-bottom:8px;
+    }
+
+    .skills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .skill{
+      background:#2563eb;
+      color:white;
+      padding:8px 14px;
+      border-radius:20px;
+      font-size:14px;
+    }
+
+    footer{
+      text-align:center;
+      background:#111827;
+      color:white;
+      padding:20px;
+      font-size:16px;
+    }
+
+    @media(max-width:768px){
+
+      .content{
+        grid-template-columns:1fr;
+      }
+
+      .header{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .contact{
+        text-align:left;
+      }
+
+      .profile{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .profile-text h1{
+        font-size:32px;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+
+      <div class="profile">
+
+        <img src="foto.jpg" alt="Foto Krisna">
+
+        <div class="profile-text">
+          <h1>Krisna Adilla Fernanda</h1>
+          <p>Mahasiswa Informatika UIN Siber Syekh Nurjati Cirebon</p>
+        </div>
+
+      </div>
+
+      <div class="contact">
+        <div>📍 Cirebon, Jawa Barat</div>
+        <div>📧 krisnaadilafernanda28@gmail.com</div>
+        <div>📱 +62 831-1685-4467</div>
+        <div>💻 github.com/krisnaadillafernanda19-coder</div>
+      </div>
+
+    </div>
+
+    <div class="content">
+
+      <div>
+
+        <div class="section">
+          <h2>Tentang Saya</h2>
+
+          <p>
+            Mahasiswa Informatika yang memiliki minat di bidang
+            web development, teknologi, dan administrasi sistem.
+            Memiliki kemampuan komunikasi yang baik, cepat belajar,
+            serta mampu bekerja sama dalam tim.
+          </p>
+        </div>
+
+        <div class="section">
+
+          <h2>Pendidikan</h2>
+
+          <div class="item">
+            <h3>UIN Siber Syekh Nurjati Cirebon</h3>
+            <span>S1 Informatika | 2023 - Sekarang</span>
+          </div>
+
+          <div class="item">
+            <h3>SMK Al Jabbar Ciledug</h3>
+            <span>Mekatronika | 2020 - 2023</span>
+          </div>
+
+        </div>
+
+        <div class="section">
+
+          <h2>Pengalaman</h2>
+
+          <div class="item">
+            <h3>Operator Produksi - PT. Laksana Karoseri</h3>
+            <span>2022</span>
+
+            <ul>
+              <li>Membantu proses produksi dan perakitan.</li>
+              <li>Mengoperasikan alat produksi.</li>
+              <li>Bekerja sama dengan tim produksi.</li>
+            </ul>
+
+          </div>
+
+          <div class="item">
+
+            <h3>Admin & Owner Bisnis Akun Game</h3>
+            <span>2014 - 2026</span>
+
+            <ul>
+              <li>Mengelola transaksi jual beli akun game.</li>
+              <li>Membangun komunikasi dengan pelanggan.</li>
+              <li>Mengelola promosi media sosial.</li>
+            </ul>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <div class="section">
+
+          <h2>Kemampuan</h2>
+
+          <div class="skills">
+            <div class="skill">HTML</div>
+            <div class="skill">CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">Python</div>
+            <div class="skill">Java</div>
+            <div class="skill">Microsoft Word</div>
+            <div class="skill">Microsoft Excel</div>
+            <div class="skill">Komunikasi</div>
+            <div class="skill">Team Work</div>
+          </div>
+
+        </div>
+
+        <div class="section">
+
+          <h2>Organisasi</h2>
+
+          <div class="item">
+
+            <h3>Himpunan Mahasiswa Informatika</h3>
+            <span>2025 - 2026</span>
+
+            <ul>
+              <li>Membantu administrasi organisasi.</li>
+              <li>Mengelola kebutuhan program kerja.</li>
+              <li>Berkolaborasi dalam kegiatan mahasiswa.</li>
+            </ul>
+
+          </div>
+
+        </div>
+
+        <div class="section">
+
+          <h2>Tujuan Karir</h2>
+
+          <p>
+            Menjadi seorang web developer dan profesional IT
+            yang mampu menciptakan solusi digital modern,
+            inovatif, dan bermanfaat.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <footer>
+      <b>Dideploy oleh: Krisna Adilla Fernanda - 2388010044</b>
+    </footer>
+
+  </div>
+
+</body>
+</html>
