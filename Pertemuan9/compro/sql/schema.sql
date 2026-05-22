@@ -3,8 +3,8 @@
 -- Compatible: MySQL 8.0+
 -- =============================================================
 
-CREATE DATABASE IF NOT EXISTS dbcompro_2388010044 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE dbcompro_2388010044;
+CREATE DATABASE IF NOT EXISTS dbcompro_2388010001 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE dbcompro_2388010001;
 
 -- -------------------------------------------------------------
 -- Table: layanan (Services)
