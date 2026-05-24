@@ -1,0 +1,33 @@
+name: Deploy Dinamis
+
+on:
+  push:
+    branches: [ main ]
+    paths: ['web-dinamis/**']
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login ke Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build dan Push Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/web-dinamis:latest ./web-dinamis
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/web-dinamis:latest
+
+      - name: Deploy ke AWS EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/web-dinamis:latest
+            docker compose up -d --force-recreate

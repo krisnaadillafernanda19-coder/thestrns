@@ -1,0 +1,31 @@
+services:
+  db-web:
+    image: mariadb:lts
+    container_name: db-web
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password_rahasia
+      MYSQL_DATABASE: dbcompro_2388010044
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d/
+    networks:
+      - uas-network
+
+  web-dinamis:
+    image: krisnaadilla19/web-dinamis:latest
+    container_name: web-dinamis
+    restart: always
+    depends_on:
+      - db-web
+    ports:
+      - "3000:3000"
+    networks:
+      - uas-network
+
+volumes:
+  db_data:
+
+networks:
+  uas-network:
+    driver: bridge
