@@ -1,13 +1,13 @@
 # **Ujian Akhir Semester : Deploy 2 System Apps Static Web dan Dynamic Web**
-### 1. Membuat Insteance baru pada AWS Region ap-southeast-1 Singapore
+### 1. Membuat Insteance Baru Pada AWS Region ap-southeast-1 Singapore
 ![alt text](image.png)
 ### 2. Membuat Folder Project UAS
 ![alt text](image-1.png)
-### 3. Masukkan web static UTS ke dalam folder Project UAS-CLOUD/static-cv
+### 3. Masukkan Web Static UTS ke Dalam Folder Project
 ![alt text](image-2.png)
-### 4. Membuat dynamic-app menggunakan PHP 
+### 4. Membuat dynamic-app Menggunakan PHP 
 ![alt text](image-3.png)
-### 5. Install Docker dari repository resmi Docker (jalankan dipowershell)
+### 5. Install Docker Dari Repository Resmi Docker (Jalankan di Powershell)
     "sudo apt update"
     "sudo apt install -y ca-certificates curl gnupg"
     "sudo install -m 0755 -d /etc/apt/keyrings"
@@ -27,12 +27,12 @@
     "docker --version"
     "docker compose version"
 ![alt text](image-4.png)
-### 6. Upload Folder Project ke EC2 melalui PowerShell
+### 6. Upload Folder Project ke EC2 Melalui PowerShell
     JALANKAN
-    "scp -i "D:\Study Recap\uas-2388010022-key.pem" -r "D:\Study Recap\uas-cloud" ubuntu@IP PUBLIC TERBARU:~/"
+    "scp -i "Sesuaikan Letak Folder Kalian\Isi Nama Pem.pem" -r "Sesuaikan Letak Folder" ubuntu@IP PUBLIC TERBARU:~/"
 
     LALU JALANKAN DOCKER COMPOSE
-    "cd ~/uas-cloud"
+    "cd ~/Nama Projek"
     "cp .env.example .env"
     "docker compose config"
     "docker compose up -d --build"
@@ -42,8 +42,8 @@
 ![alt text](image-5.png)
 ### 7. Set Up Docker Hub
     BUAT REPOSITORY BARU PADA DOCKER HUB
-    "gamine1/uas-static"
-    "gamine1/uas-dinamic"
+    "/uas-static"
+    "/uas-dinamic"
 ![alt text](image-6.png)
 
     BUAT ACCESS TOKEN DOCKER HUB
@@ -52,34 +52,32 @@
 
 ![alt text](image-7.png)
 ### 8. Login Docker ke EC2 Melalui PowerShell
-    "docker login -u gamine1"
-    (Saat diminta password, paste Docker Hub access token, bukan password akun biasa.)
+    "docker login -u username Kalian"
+    (Saat diminta password, Paste Docker Hub Access Token, Bukan Password Akun Biasa.)
 
     BUILD IMAGE DARI PROJECT
-    Pastikan Posisi Folder di (cd ~/uas-cloud)
+    Pastikan Posisi Folder di (cd ~/Projek Kalian)
     lalu build "docker compose build static-cv dynamic-app"
     lalu push image ke docker hub "docker compose push static-cv dynamic-app"
 ![alt text](image-8.png)
 ### 9. Set Up Github Repository
     BUAT REPOSITORY BARU
-    "https://github.com/bruc3luck-design/uas-cloud.git"
 
     LALU CONNECT FOLDER PROJECT KE REPOSITORY BARU
-    "git remote add origin https://github.com/bruc3luck-design/uas-cloud.git"
 
     LALU PUSH FOLDER PROJECT KE REPOSITORY
     "git add ."
-    "git commit -m "Initial UAS cloud deployment project""
+    "git commit -m "Initial UAS Cloud Deployment Project""
     "git push -u origin main"
 ![alt text](image-9.png)
 ### 10. Set Up Github Secret
-    DOCKERHUB_USERNAME = gamine1
-    DOCKERHUB_TOKEN    = token Docker Hub kamu
-    EC2_HOST           = IP public EC2 terbaru
+    DOCKERHUB_USERNAME = username Docker Kalian
+    DOCKERHUB_TOKEN    = token Docker Hub Kalian
+    EC2_HOST           = IP public EC2 Terbaru
     EC2_USER           = ubuntu
-    EC2_SSH_KEY        = isi private key .pem
-    STATIC_IMAGE       = gamine1/uas-static:latest
-    DYNAMIC_IMAGE      = gamine1/uas-dinamic:latest
+    EC2_SSH_KEY        = Isi Private key .pem
+    STATIC_IMAGE       = username/uas-static:latest
+    DYNAMIC_IMAGE      = username/uas-dinamic:latest
     MYSQL_DATABASE     = uas_db
     MYSQL_USER         = uas_user
     MYSQL_ROOT_PASSWORD = isi MYSQL_ROOT_PASSWORD dari .env
@@ -91,8 +89,8 @@
 
     CLONE REPOSITORY GITHUB KE EC2
     "rm -rf uas-cloud"
-    "git clone https://github.com/bruc3luck-design/uas-cloud.git"
-    "cd uas-cloud"
+    "git clone Link GitHub Kalian"
+    "cd Nama Projek Kalian"
     "cp .env.example .env"
 
     COMMIT & PUSH WORKFLOW
@@ -103,22 +101,7 @@
 ![alt text](image-11.png)
 ### 12. Tes Menjalankan Web Static & Dynamic
     Static
-![alt text](<Screenshot 2026-05-30 145809.png>)
+![alt text](image-13.png)
 
     Dynamic
 ![alt text](image-12.png)
-
-### 13. Live Test Zero Touch
-#### STATIC
-    Mengubah header "<a class="brand-mark" href="#hero">Catur Prasetiyo Gama </a>"
-    Menjadi " <a class="brand-mark" href="#hero">Catur Prasetiyo Gama | UAS Administrasi Server_2388010022 </a>"
-    Lalu commit & push
-![alt text](image-14.png)
-![alt text](image-13.png)
-
-#### DYNAMIC
-    Mengubah Nama App "define('APP_NAME', 'UAS Cloud Computing II');"
-    Menjadi "define('APP_NAME',    'UAS Administrasi Server');"
-    lalu Commit & Push
-![alt text](image-15.png)
-![alt text](image-16.png)
