@@ -1,121 +1,60 @@
-# **Ujian Akhir Semester : Deploy 2 System Apps Static Web dan Dynamic Web**
-### 1. Membuat Insteance baru pada AWS Region ap-southeast-1 Singapore
-![alt text](image.png)
+# WatchVault - Web Dinamis & Statis (UAS Administrasi Server)
 
-### 2. Membuat Folder Project UAS
-![alt text](image-1.png)
 
-### 3. Masukkan web static UTS ke dalam folder Project UAS-CLOUD/static-cv
-![alt text](image-2.png)
+## 🌐 Tautan Langsung ke AWS
+*(IP Publik dari instance EC2)*
+- **Web Statis (Port 80):** `http://18.138.144.89`
+- **Web Dinamis (Port 3000):** `http://18.138.144.89:3000`
 
-### 4. Membuat dynamic-app menggunakan PHP 
-![alt text](image-3.png)
+---
 
-### 5. Install Docker dari repository resmi Docker (jalankan dipowershell)
-    "sudo apt update"
-    "sudo apt install -y ca-certificates curl gnupg"
-    "sudo install -m 0755 -d /etc/apt/keyrings"
-    "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg"
-    "sudo chmod a+r /etc/apt/keyrings/docker.gpg"
-    ". /etc/os-release"
-    "echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download docker.com/linux/ubuntu ${VERSION_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/ null"
-    "sudo apt update"
-    "sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
+## 🏗️ Topologi Arsitektur & Penjelasan Environment
 
-    LALU AKTIFKAN DOCKER
-    "sudo systemctl enable docker"
-    "sudo systemctl start docker"
-    "sudo usermod -aG docker ubuntu"
+Proyek ini menerapkan arsitektur **Cloud Native** dan menggunakan sistem Continuous Integration/Continuous Deployment (CI/CD) yang diotomatisasi melalui GitHub Actions.
 
-    LALU CEK APAKAH DOCKER BERHASIL DIINSTALL
-    "docker --version"
-    "docker compose version"
-![alt text](image-4.png)
+### 1. Struktur Orkestrasi Jaringan (Docker Compose)
+- **Aplikasi terpisah:** Pipeline dipisahkan dengan teknik `Paths Filter` agar eksekusi CI/CD antara `web-statis` (Nginx Alpine) dan `web-dinamis` (PHP Apache 8.2) terisolasi dan efisien.
+- **DNS Internal & Keamanan:** Kontainer aplikasi terhubung dengan database melalui jaringan Docker *bridge* kustom. Nama kontainer (`mariadb-dinamis`) digunakan sebagai host database.
+- **Environment Variables:** Konfigurasi kredensial diamankan menggunakan `env` (seperti `DB_NAME`, `DB_USER`, `DB_PASSWORD`) yang diinjeksi saat build/run.
+- **Automasi Database:** Data awal untuk web dinamis di-seeding secara otomatis dengan melakukan mount volume `./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro`.
+- **Persistensi Data:** Database menggunakan volume `watchvault_mariadb_data:/var/lib/mysql` untuk mencegah kehilangan data saat kontainer direstart.
 
-### 6. Upload Folder Project ke EC2 melalui PowerShell
-    JALANKAN
-    scp -i "C:\Semester 6 INF\2388010044_UAS.pem" -r "C:\Semester 6 INF\UAS-Krisna-2388010044" ubuntu@IP_Baru:~/nebula-stack
+---
 
-    LALU JALANKAN DOCKER COMPOSE
-    "cd ~/uas-cloud"
-    "cp .env.example .env"
-    "docker compose config"
-    "docker compose up -d --build"
+## 📸 Log Pengujian & Bukti Deploy
 
-    LALU CEK CONTAINER
-    "docker compose ps"
+### 1. Persiapan Infrastruktur (AWS EC2 & Docker)
+*Pembuatan instance EC2 dan konfigurasi Security Group.*
+![Bikin Instance EC2]![alt text]![alt text](image-16.png)
+![Bikin Security Group]![alt text](image-15.png)
 
-![alt text](image-7.png)
-![alt text](image-13.png)
+*Instalasi Docker Engine dan penyiapan repositori Docker.*
+![Bikin Repo Docker]![alt text](image-17.png)
+![Install Docker di EC2]![alt text](image-18.png)
 
-### 7. Set Up Docker Hub
-    BUAT REPOSITORY BARU PADA DOCKER HUB
-    "krsnaadlaaa/uas-static"
-    "krsnaadlaaa/uas-dinamic"
-![alt text](image-5.png)
+### 2. Konfigurasi CI/CD Pipeline
+*Pembuatan repositori GitHub dan injeksi rahasia (Secrets/Variables).*
+![Bikin Repo & Secret]![alt text](image-19.png)
 
-    BUAT ACCESS TOKEN DOCKER HUB
-    "Account Settings -> Personal access tokens -> Generate new token"
-    "Permission : Read & Write"
+*Pembuatan kode Docker Compose dan Dockerfile.*
+![Push Kode ke GitHub]![alt text](image-20.png)
 
-![alt text](image-6.png)
+### 3. Eksekusi Deploy ke EC2 (Zero-Touch Deployment)
+*Deployment otomatis web statis (Port 80) melalui runner Github Actions.*
+![Deploy Web Statis]![alt text](image-22.png)
 
-### 8. Login Docker ke EC2 Melalui PowerShell
-    "docker login -u krsnaadlaaa"
-    (Saat diminta password, paste Docker Hub access token, bukan password akun biasa.)
+*Deployment otomatis web dinamis beserta MariaDB.*
+![Deploy Web Dinamis]![alt text](image-21.png)
 
-    BUILD IMAGE DARI PROJECT
-    Pastikan Posisi Folder di (cd ~/Projek Kalian)
-    lalu build "docker compose build static-cv dynamic-app"
-    lalu push image ke docker hub "docker compose push static-cv dynamic-app"
-![alt text](image-10.png)
+### 4. Hasil Uji Coba Aplikasi & Port Mapping
+*Akses ke Web Statis (Port 80) berhasil dan berjalan normal.*
+![Akses Web Statis]![alt text](image-23.png)
 
-### 9. Set Up Github Repository
-    BUAT REPOSITORY BARU
-    "https://github.com/krisnaadillafernanda19-coder/nebula-stack.git"
+*Akses ke Web Dinamis (Port 3000) dan Database berfungsi normal.*
+![Akses Web Dinamis]![alt text](image-25.png)
 
-    LALU CONNECT FOLDER PROJECT KE REPOSITORY BARU
-    "git remote add origin https://github.com/krisnaadillafernanda19-coder/nebula-stack.git"
+### 5. Bukti Zero Downtime (Live Test Auto-Update)
+> **Catatan Ujian Live:** (Tambahkan screenshot proses push kode baru dan tampilan di browser yang langsung berubah secara otomatis tanpa masuk ke server EC2).
 
-    LALU PUSH FOLDER PROJECT KE REPOSITORY
-    "git add ."
-    "git commit -m "UAS Administrasi Server""
-    "git push -u origin main"
-![alt text](image-8.png)
-
-### 10. Set Up Github Secret
-    DOCKERHUB_USERNAME = krsnaadlaaa
-    DOCKERHUB_TOKEN    = token Docker Hub kamu
-    EC2_HOST           = IP public EC2 terbaru
-    EC2_USER           = ubuntu
-    EC2_SSH_KEY        = isi private key .pem
-    STATIC_IMAGE       = krsnaadlaaa/uas-static:latest
-    DYNAMIC_IMAGE      = krsnaadlaaa/uas-dinamic:latest
-    MYSQL_DATABASE     = uas_db
-    MYSQL_USER         = uas_user
-    MYSQL_ROOT_PASSWORD = isi MYSQL_ROOT_PASSWORD dari .env
-    MYSQL_PASSWORD      = isi MYSQL_PASSWORD dari .env
-![alt text](image-10.png)
-
-### 11. Set Up Github Action
-    ".github/workflows/deploy-static.yml"
-    ".github/workflows/deploy-dynamic.yml"
-
-    CLONE REPOSITORY GITHUB KE EC2
-    "rm -rf Projek Kalian"
-    "git clone https://github.com/krisnaadillafernanda19-coder/nebula-stack.git"
-    "cd uas-cloud"
-    "cp .env.example .env"
-
-    COMMIT & PUSH WORKFLOW
-    "git status"
-    "git add .github/workflows/deploy-static.yml .github/workflows/deploy-dynamic.yml"
-    "git commit -m "Add GitHub Actions deployment workflows""
-    "git push origin main"
-![alt text](image-12.png)
-
-### 12. Tes Menjalankan Web Static & Dynamic
-    Static
-![alt text](image-11.png)
-    Dynamic
-![alt text](image-12.png)
+- **Proses Git Push & Github Actions Sukses:**
+  ![Proses Git Push & Github Actions Sukses]![alt text](image-26.png)
