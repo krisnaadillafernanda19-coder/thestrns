@@ -4,7 +4,7 @@
 2. Patching OS
 3. Uninstall semua Services manual sebelumnya 
 4. Repositori baru untuk web dinamis di docker hub
-![alt text]({78F6A24E-872B-43CF-9401-461987B63663}.png)
+![alt text](image.png)
 5. Buka Projek Company himafor_nim 
 6. Bagi 2 Folder untuk projek Web App Statis dan Dinamis
 7. Move file index dan Dcoker milik web statis ke Folder web-statis
@@ -13,17 +13,16 @@
     - Install Dependencies: `npm install`
     - Create user di DBMS : `sudo mysql -u root -p`
         - `CREATE USER 'userwebdinamis_2388010044'@'localhost' IDENTIFIED BY 'O)2E432krM2OfUXsIV';`
-        - `GRANT ALL PRIVILEGES ON *.* TO 'userwebdinamis_nim'@'localhost';`
+        - `GRANT ALL PRIVILEGES ON *.* TO 'userwebdinamis_2388010044'@'localhost';`
         - `FLUSH PRIVILEGES;`
         - `exit;`
-![alt text]({9C3BE317-B322-40AA-A7C2-A8151A120E3C}.png)
+![alt text](image-1.png)
     - Edit File .env di folder web-dinamis
     - `npm run build`
     - `npm start`
     - Pastikan web dapat diakses di http://localhost:3000 admin tanpa error
 ![alt text](image-2.png)
 10. Buat file Dockerfile
-
 11. Buat file docker-compose.yml
 12. Buat Workflows File -> deploy-dinamis.yml di folder .github/workflows/ dari Projek web-dinamis
 13. Edit File -> deploy.yml di folder .github/workflows/ untuk 
